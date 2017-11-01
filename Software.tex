@@ -1,7 +1,7 @@
 In this LIDAR lab oration the National instruments myRIO was used in combination with National instruments LabWIEV. 
 When using myRIO as an base for the LIDAR there is a coupel of design considerations to take in to count especially if the LIDAR have the need to be fast because then the latency and the transfer speed of the USB can be a limitation. 
-In this report it was decided that we use a spitted architecture letting the myRIO do the measurements and controlling the motor wihle the personal computer was used to display the data that the myRIO captured.
-\subsection{The myRIO sotfware}\label{subsection:myRIO}
+In this report it was decided that we use a spitted architecture letting the myRIO do the measurements and controlling the motor while the personal computer was used to display the data that the myRIO captured.
+\subsection{The myRIO software}\label{subsection:myRIO}
 \begin{figure}[ht]
 %  \includegraphics[scale=1.7]{birds.jpg}
     \input{./images/myRio-Software}
@@ -15,7 +15,7 @@ Step motor control is achieved by using a implementation of a shift register exp
 \begin{figure}[ht]
 %  \includegraphics[scale=1.7]{birds.jpg}
     %\centering
-   \input{./images/shiftreg}
-  \caption{The shift register is working by step wise shifting the true state on step to the right. When the true state reaches the right most cell it will on the next stepp be shifted to the beginning of the register.}
+%   \input{./images/shiftreg}
+  \caption{The shift register is working by step wise shifting the true state on step to the right. When the true state reaches the right most cell it will on the next step be shifted to the beginning of the register.}
   \label{fig:shift-reg}
 \end{figure}
