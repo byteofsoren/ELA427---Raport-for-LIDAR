@@ -1,5 +1,6 @@
 %Here is all the information about the hardware
 The hardware is built to exceed the requirement for the current motor and also be able to control more powerful equipment. \newline
 The hardware is built up by 2 H-bridges, sharp 2Y0A21F IR snesor, NI myRIO, 42BYGHM809 Bipolar stepper motor and a LM2596 DC-DC buck converter. 
-Each H-bridge have a pair of high power, high voltage N and P MOSFETs (2 of each) which need 10V to open. 4 optocouplers provide the MOSFETs with a high voltage line (of 10+V) to open since the voltage to the stepper motor is only 3.3V. The optocouplers also provide galvanic isolation between the expensive myRIO and the high power motor control. %If however a 10+V motor is used the DC-DC buck would not be needed since its function is to only to provide the possibility to have one pair of cables from the power supply. 
-High power motors also create a lot of 
+Each H-bridge have a pair of high power, high voltage N and P MOSFETs (2 of each) which need 10V to open. 4 optocouplers provide the MOSFETs with a high voltage line (of 10+V) to open since the voltage to the stepper motor is only 3.3V. The optocouplers also provide galvanic isolation between the expensive myRIO and the high power motor control. On the digital side (where the myRIO is connected) there is a 75
+%If however a 10+V motor is used the DC-DC buck would not be needed since its function is to only to provide the possibility to have one pair of cables from the power supply. 
+High power motors also create a lot of noise and therefor there is two pairs of capacitors. One 100µF and one smaller 1µF to smooth out different types of noise. There is one pair of capacitor on each powerline (motor power and mosfet power)
