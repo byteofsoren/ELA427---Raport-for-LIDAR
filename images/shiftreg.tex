@@ -1,0 +1,38 @@
+\begin{tikzpicture}
+\tikzstyle{notused} = [rectangle, rounded corners , minimum width=3mm, minimum height=1mm,text centered, draw=black]
+\tikzstyle{round}=[circle, minimum width=0mm,draw=black]
+\tikzstyle{square} = [rectangle, minimum width=1mm, draw=black]
+\tikzstyle{empty}=[]
+
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{dottarrow} = [thick, dotted,->,>=stealth]
+\tikzstyle{noarrow}=[thick,-=,=stealth]
+
+%node
+\node (DA) [square] {T};
+\node (DB) [square, right of =DA, xshift=-6mm] {F};
+\node (DC) [square, right of =DB, xshift=-6mm] {F};
+\node (DD) [square, right of =DC, xshift=-6mm] {F};
+
+\node (DE) [square, right of =DD, xshift=0mm] {F};
+\node (DF) [square, right of =DE, xshift=-6mm] {T};
+\node (DG) [square, right of =DF, xshift=-6mm] {F};
+\node (DH) [square, right of =DG, xshift=-6mm] {F};
+
+%Epmty target nodes
+\node (DAT) [empty, top of=DA, yshift=8mm]{}
+\node (DBT) [empty, top of=DB, yshift=8mm]{}
+\node (DCT) [empty, top of=DC, yshift=8mm]{}
+\node (DDT) [empty, top of=DD, yshift=8mm]{}
+
+\node (DET) [empty, top of=DE, yshift=8mm]{}
+\node (DFT) [empty, top of=DF, yshift=8mm]{}
+\node (DGT) [empty, top of=DG, yshift=8mm]{}
+\node (DHT) [empty, top of=DH, yshift=8mm]{}
+
+%lines to target node
+\draw [arrow] (DA) -- (DAT);
+%node (D1) [square right of=Dfirst, xshift=8mm] {F};
+%\node (D2) [square right of=D1, xshift=8mm] {F};
+\end{tikzpicture}
