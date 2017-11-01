@@ -1,21 +1,62 @@
 In this LIDAR lab oration the National instruments myRIO was used in combination with National instruments LabWIEV. 
 When using myRIO as an base for the LIDAR there is a coupel of design considerations to take in to count especially if the LIDAR have the need to be fast because then the latency and the transfer speed of the USB can be a limitation. 
-In this report it was decided that we use a spitted architecture letting the myRIO do the measurements and controlling the motor while the personal computer was used to display the data that the myRIO captured.
+In this project it was decided to go with an spitted architecture letting the myRIO do the measurements and controlling the motor while the personal computer was used to display the data that the myRIO captured.
+
 \subsection{The myRIO software}\label{subsection:myRIO}
 \begin{figure}[ht]
-%  \includegraphics[scale=1.7]{birds.jpg}
     \input{./images/myRio-Software}
   \caption{This figure describes the inner simplified working of the myRIO code.
-  At initialize we initialize the unit. Then because how the myRIO is working we wait while the myRIO is measuring the sensor. The measure block only represents that we retrieve the value of the previously measured data. The data is put on the FIFO stack to b sent to the computer while myRIO takes an other step with the stepper motor. When that is done and the user haven't pressed stop to abort we loop back to wait and do the measurement again.}
+  At initialise we initialise the unit. Then because how the myRIO is working the code is waiting while the myRIO is measuring the sensor. The measure block only represents that we retrieve the value of the previously measured data. The data is put on the FIFO stack to b sent to the computer while myRIO takes an other step with the stepper motor. When that is done and the user haven't pressed stop to abort we loop back to wait and do the measurement again.}
   \label{fig:myRIO-loop}
 \end{figure}
 The myRIO part of the code uses an loop described in figure \ref{fig:myRIO-loop}.
+
+\subsubsection{Measuring data}\label{subsubsection:mesure}
+The implementation of myRIO reads the data continuously.
+And therefore the motor needs to stop before the read block reads the value.
+After the value have bin acquired the system stores the value as $y$ with the motor position $x$ in to an an cluster and then in to an array of clusters. In this case the the motor mentioned in \ref{section:hardware} have 400 steps and therefor the size of that array is 400 elements.
+
+\subsubsection{Sending data to pc}\label{subsubsection:sendData}
+The array previously mentioned in the section \ref{subsubsection:mesure} is sent over an network based shared variable that is implemented as an first in first out queue\cite{myRIO-Shared}. 
+
+
 \subsubsection{Step motor control}\label{subsubsection:Step-control}
 Step motor control is achieved by using a implementation of a shift register explained in figure \ref{fig:shift-reg}. 
+
 \begin{figure}[ht]
-%  \includegraphics[scale=1.7]{birds.jpg}
-    %\centering
-%   \input{./images/shiftreg}
-  \caption{The shift register is working by step wise shifting the true state on step to the right. When the true state reaches the right most cell it will on the next step be shifted to the beginning of the register.}
+  \centering
+  \input{./images/shiftreg}
+  \caption{The shift register is working by step wise shifting the true state on step to the right and in this case have output upward. In this case the register is in state 1 at the left and proceed in the direction of the dotted arrow when moving over to the next state. When the true state reaches the right most cell it will on the next step be shifted to the beginning of the register. The output of this register is a 4 bit pararell bus denoted by the up facing arrows.}
   \label{fig:shift-reg}
 \end{figure}
+The motor is then pair wise connected to the each bit in the shift register thus implementing wave drive.
+
+\subsection{Computer side}\label{subsection:computer-side}
+The computer receives the data from the myRIO device and renders the result on the screen. In the figure \ref{fig:data-recive} a demonstration of the proces can be shown.
+
+\begin{figure}[ht]
+    \centering
+   \input{./images/datarezive}
+  \caption{When the computer is runs the code. It first goes throw an initialisation phase that sets some common variables. After that it splits in 2 threads for with one is responsible for collecting the data from the myRIO and the other thread have the responsibility of rendering the user interface and the different graphical element.}
+  \label{fig:data-recive}
+\end{figure}
+
+\subsubsection{Collecting the data form myRIO}\label{subsubsection:collectData}
+Sins the myRIO sends the data in an array of clusters the program needs to extract the data in each $y$ value and convert the value that is based on voltage to an value that is based on distance. That conversion is done doing an exponential regression over value and range, more info about the regression can be found in chapter \ref{secition:results}. The compute then stores the cluster array in memory so it can be sent over to the other loop by using local variables. 
+
+\subsubsection{Rendering the Polar-plot}\label{subsubsection:renderPolar}
+Rendering the polar plot is then done by sending that array in to the polar plot with point iteration\cite{labVIEW-polar-plot} in the render thread. 
+This is done because then render can run in a slower phase then the receiver and thus save decrees the power usage of the program. 
+As an side effect of this the screen is much more stable and don't blink as much.
+
+\subsubsection{Computing the histogram}\label{subsubsection:comphistogram}
+This program have a ability to generate a histogram view of the length based users inputed expected value defined as $\mu:=$"User expected value" and delta value $\Delta:=$"Users expected min/max" that is going to be used to calculated an expected min and max value defined as $ max:=\mu+\Delta,\quad min:=\mu-\Delta, \quad D:=$"Distance to object".
+The computation is done by first taking each measurement and checking if the value of the data is in the interval of $ (min \leq D \leq max) $ then if so restore the data as an frequency array by using the distance as indexer in the array and increasing the value in that cell by one.
+Value that ocurs outside the expeted min/max interval is ignored.
+In this way the histogram plot even works for detecting mean and standard deviation while rotating in \textbf{non} deterministic environment.
+Then from the frequency array we created ealier the program can calculate mean and standard deviation by using the formulas.
+$$\begin{matrix} 
+\overline{x}=\frac{\Sigma(x_i-\mu)^2}{\Sigma(y_i)} & 
+\sigma= \sqrt{\frac{\Sigma((f_i*x_i-\overline{x})^2)}{\Sigma(f_i)}}
+\end{matrix}\label{equation:mean-and-div}$$
+Finaly the figure is rendered using labVIEWs "plot waveform vi" \cite{labVIEW-Plot-Waveform-VI} by also taking the max value and min value as an argument in to the plot. 
