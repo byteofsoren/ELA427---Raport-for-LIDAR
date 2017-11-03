@@ -1,8 +1,22 @@
-The data in this laboratory is blabalaba.
+
+\section{Test set up}\label{section:testSetUp}
+\input{mesurment/testsettup}
+
+\section{Measurement and test results}\label{secition:results}
+The measurements that was taken for this report was done both while the motor was rotating and standing still (static). And are represented as polar plots and histogram of the distance. 
+\subsection{The sensors accuracy}\label{subsubsection:accuracy}
+One of the question that was stated early in the development was how the speed of the motor affected the accuracy of the sensor.
+The early results of that question indicated that the sensor was affected only in the range of 5 to 20ms between steps.
+And the histograms in figure \ref{fig:test-hist} the results of to of those test at an expected length of 16cm. How ever when the speed increases then also is the chance that the sensor misses the target totally, that however couldn't be measured by the system so there is no graps for that. 
+
 \begin{figure}[ht]
     \centering
    %\input{./images/datarezive}
-   \includegraphics {Expected160-Mean156-Distrubution5,257015-Rotating-50ms.bmp}
-  \caption{}
+        \includegraphics[scale=0.2] {./mesurment/data/Expected_170,0__Mean_176,02__Distrubution_13,567648_Rotating_1ms}
+        \includegraphics[scale=0.2] {./mesurment/data/Expected_160,0__Mean_161,13__Distrubution_14,311767_Rotating_5ms}\\
+        \includegraphics[scale=0.2] {./mesurment/data/Expected_160,0__Mean_161,29__Distrubution_10,066412_Rotating_10ms}
+        \includegraphics[scale=0.2] {./mesurment/data/Expected_160,0__Mean_156,97__Distrubution_6,850402_Rotating_40ms}
+  \caption{The delay between each step. Top left:1ms, Top right: 5ms, Botom left:10ms, Botom right: 40ms. As the data shows the acurasy of the motor is worse in between 5 and 10ms.}
   \label{fig:test-hist}
 \end{figure}
+
