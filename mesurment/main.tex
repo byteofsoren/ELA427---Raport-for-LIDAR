@@ -3,7 +3,7 @@
 \input{mesurment/testsettup}
 
 \section{Measurement and test results}\label{secition:results}
-The measurements that was taken for this report was done both while the motor was rotating and standing still (static). And are represented as polar plots and histogram of the distance. 
+The measurements that was taken for this report was done both while the motor was rotating and standing still (static). And are represented as polar plots and histogram of the distance.
 
 \input{mesurment/mostIMPORTANT}
 
@@ -19,7 +19,7 @@ Data for the sensors accuracy was obtained by using the function described earli
        % \includegraphics[scale=0.2] {./mesurment/data/Expected_160,0__Mean_161,29__Distrubution_10,066412_Rotating_10ms}
         \includegraphics[scale=0.2] {./mesurment/data/Expected_160,0__Mean_156,97__Distrubution_6,850402_Rotating_40ms}
   %\caption{The delay between each step. Top left:1ms, Top right: 5ms, Bottom left:10ms, Bottom right: 40ms. As the data shows the accuracy of the sensor is worse in between 5 and 10ms.}
-  \caption{The delay between each step. Left $1ms$, Right $40ms$.}
+  \caption{A rotating LIDAR. Left exacted object at $ \mu=170mm $  for the rotational delay of $1ms$. Right $ \mu=160mm$ for the delay of $40ms$.}
   \label{fig:test-hist}
 \end{figure}
 
@@ -29,19 +29,19 @@ Data for the sensors accuracy was obtained by using the function described earli
 %\input{./mesurment/Data-table-static}
 
 \subsection{LIDAR measurements}\label{subsection:lidarmeaurment}
-The rotating sensor for the LIDAR have as shown in the chapter \ref{subsubsection:mesure} loses its accuracy the faster the sensor moves. 
+The rotating sensor for the LIDAR have as shown in the chapter \ref{subsubsection:mesure} loses its accuracy the faster the sensor moves.
 %That can be shown in the figure \ref{fig:lidar-images} and therefore as the speed increases the noise also increases, but it is absolutely worst between 5 and 10ms because the construction shakers more at those speeds causing the sensor to make some random readings.
 
 \begin{figure}[ht]
     \centering
    %\input{./images/datarezive}
         \includegraphics[scale=0.2]{./mesurment/data/Lidar_1ms_9_oclock_detection}
-        \includegraphics[scale=0.2]{./mesurment/data/Lidar_10ms_9_oclock_detection}\\
-        \includegraphics[scale=0.2]{./mesurment/data/Lidar_30ms_9_oclock_detection}
+        %\includegraphics[scale=0.2]{./mesurment/data/Lidar_10ms_9_oclock_detection}\\
+        %\includegraphics[scale=0.2]{./mesurment/data/Lidar_30ms_9_oclock_detection}
         \includegraphics[scale=0.2]{./mesurment/data/Lidar_40ms_9_oclock_detection}
-    
- %\caption{blub}
-  \caption{In this figure the only object that should be there is the object at $(x=-1, y=0)$ the rest is ghost except perhaps the one in the bottom because its the motor shaft that is going throw the cog and interferes with the sensor.}
+ %\caption{}
+  %\caption{In this figure the only object that should be there is the object at $(x=-1, y=0)$ the rest is ghost except perhaps the one in the bottom because its the motor shaft that is going throw the cog and interferes with the sensor.}
+  \caption{ The render LIIDAR output with an object detected at the left, note that the detection in the bottom is mostlikly a detection of the motor axis.   }
   \label{fig:lidar-images}
 \end{figure}
 
